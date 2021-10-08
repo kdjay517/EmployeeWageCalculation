@@ -1,19 +1,20 @@
 #!/bin/bash -x
 
-isPartTime=1;
-isFullTime=2;
+isPartTime=2;
+isFullTime=1;
 empRatePerHr=20;
-randomCheck=$((RANDOM%3));
-if [ $isFullTime -eq $randomCheck ]
-then
-        empHrs=8;
-elif [ $isPartTime -eq $randomCheck ]
-then
-        empHrs=4;
-else
-        empHrs=0;
-fi
+empCheck=$((RANDOM%3));
+case $empCheck in
+        $isFullTime )
+                        empHrs=8;
+                        ;;
+        $isPartTime )
+                        empHrs=4;
+                        ;;
+        * )
+                        empHrs=0;
+                        ;;
+esac
 salary=$(($empHrs*$empRatePerHr));
-echo "salary per day is $salary"
-
+echo "employee per day salary is $salary"
 
