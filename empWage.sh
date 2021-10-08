@@ -6,13 +6,14 @@ MAX_HRS_IN_MONTH=100;
 EMP_RATE_PER_HR=20;
 NUM_WORKING_DAYS=20;
 
+
 totalEmpHrs=0;
 totalWorkingDays=0;
+declare -A dailyWage;
 
 function getWorkHrs(){
         local empCheck=$1;
         case $empCheck in
-
                 $IS_PART_TIME )
                                 workHrs=4;
                                 ;;
@@ -27,7 +28,7 @@ function getWorkHrs(){
 }
 function getEmpWage(){
         local empHr=$1;
-        echo $(($empHrs*$EMP_RATE_PER_HR))
+           echo $(($empHr*$EMP_RATE_PER_HR))
 }
 
 
@@ -37,7 +38,11 @@ do
         empCheck=$((RANDOM%3))
         empHrs="$(getWorkHrs $empCheck)"
         totalEmpHrs=$(($totalEmpHrs+$empHrs))
-        dailyWage[$totalWorkingDays]="$( getEmpWage $empHrs )"
+        dailyWage["Day" $totalWorkingDays]="$( getEmpWage $empHrs )"
 done
 totalSalary=$(($totalEmpHrs*$EMP_RATE_PER_HR));
-echo daily wages are ${dailyWage[@]}
+echo ${dailyWage[@]}
+echo ${!dailyWage[@]}
+
+
+
